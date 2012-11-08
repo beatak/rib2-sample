@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hi rib</title>
+    <link rel="stylesheet" href="style/bootstrap.css">
+    <link rel="stylesheet" href="style/index.css">
+  </head>
+  <body>
+    <div id="page">
+
+      <form id="nav" class="form-search" action="proxy.php">
+        <div class="input-append">
+          <input type="text" class="span5 search-query" id="keyword">
+          <button type="submit" class="btn">Search</button>
+        </div>
+      </form>
+
+      <div id="content">
+        <div id="sidebar">
+          <label>tags</label>
+          <input type="text" name="tags" />
+<!--
+oh well. i'm tired. not implemented.
+          <label>safe search</label>
+          <input type="text" />
+-->
+        </div>
+        <div id="center">
+          <ul class="thumbnails"></ul>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="script/jquery-1.8.2.js"></script>
+    <!-- external dependency on Meetup -->
+    <script src="script/meetupbootstrap.js"></script>
+    <script src="script/jquery.deparam.js"></script>
+    <script src="script/URL.js"></script>
+    <script src="script/crc32.js"></script>
+    <script src="script/mustache.js"></script>
+    <!-- framework -->
+    <script src="script/rib2.pagecontroller.js"></script>
+    <script src="script/rib2.presentation.js"></script>
+    <!-- implementation -->
+    <script src="script/rib2.flickr.center.js"></script>
+    <script src="script/rib2.flickr.keyword.js"></script>
+    <script src="script/rib2.flickr.sidebar.js"></script>
+    <script src="script/rib2.flickr.js"></script>
+
+<!-- templates! -->
+<script type="template/mustache" id="tpl-thumbnail-li">
+  <li class="span4">
+    <div class="thumbnail">
+      <a href="http://flickr.com/photos/{{OWNER_ID}}/{{PHOTO_ID}}/"><img src="{{IMAGE_SRC}}" alt=""></a>
+      <div class="caption">
+        <h3>{{IMAGE_TITLE}}</h3>
+        <p>{{IMAGE_DESC}}</p>
+        <p>taken by {{AUTHOR}}</p>
+      </div>
+    </div>
+  </li>
+</script>
+
+  </body>
+</html>
