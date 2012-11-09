@@ -2,24 +2,24 @@ $(
 function () {
 	"use strict";	
 
-	// PRIVATE CONSTANTS
-	var CLASS_SELECTION = 'selected';
-
 	// ===========================================
 
 	Meetup.PageController.queueProduce(
 		'flickr',
-
 		'sidebar',
 		{
 			name: 'sidebar',
       inputs: null,
-
 			events: [
-				['keyup input', 'onInputKeyup']
+				['keyup input', 'onInputKeyup'],
+        ['click .mymymy', 'onElClick']
 			],
 
 			// =======================================
+
+      onElClick: function (ev) {
+        alert('hihi');
+      },
 
 			// methods
 			initialize: function () {
@@ -62,8 +62,6 @@ function () {
           this.trigger('query');
         }
 			}
-
 		}
 	);
-
 });

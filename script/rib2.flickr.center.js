@@ -11,16 +11,12 @@ function () {
 
 	Meetup.PageController.queueProduce(
 		'flickr',
-
 		'center',
 		{
 			name: 'center',
       elList: null,
       tplListItem: null,
-
-			events: [
-				// ['click', 'onElClick']
-			],
+			events: [],
 
 			// =======================================
 
@@ -29,7 +25,6 @@ function () {
 				console.log('CENTER::INIT');
         this.elList = $(this.el).find(SELECTOR_UL);
         this.tplListItem = $.trim( $(SELECTOR_TPL).html() );
-
 			},
 
 			getValue: function () {
@@ -69,16 +64,10 @@ function () {
           }
         );
         $(this.elList).html( arr.join('') );
-			},
+			}
 
 			// =======================================
 
-			// event handler
-			onElClick: function (ev) {
-				console.log('CENTER::ONELCLICK');
-			}
-
 		}
 	);
-
 });
