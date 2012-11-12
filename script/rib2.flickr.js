@@ -17,8 +17,22 @@ function () {
 
       initialize: function () {
         console.log('HI');
-      }
+      },
 
+      forgeHistory: function (data) {
+        var myurl, mytitle;
+        var arr_myurl = this.url.split('/');
+        var arr_title = ['Hi rib'];
+        arr_myurl.pop();
+        myurl = Meetup.URL.mungeUrl(arr_myurl.join('/'), data);
+        if (data.text) {
+          arr_title.push(': ');
+          arr_title.push(data.text);
+        }
+        mytitle = arr_title.join('');
+        document.title = mytitle;
+        return [data, mytitle, myurl];
+      }
     }
   ];
 

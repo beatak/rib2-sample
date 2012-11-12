@@ -17,6 +17,7 @@ function () {
       elList: null,
       tplListItem: null,
 			events: [],
+      onlyview: true,
 
 			// =======================================
 
