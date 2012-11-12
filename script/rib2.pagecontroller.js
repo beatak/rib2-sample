@@ -19,8 +19,6 @@ function ($, window, document) {
 		// this will fail to instantiate.  Load an appropriate history.js
 		this.isNativeHistory = (history && Meetup.PageController.isFunc(history.pushState));
 		if (!this.isNativeHistory && !(History && History.pushState)) {
-			// very strangely, in IE8, an object that is returned in constructor
-			// will be ignored, and half baked object gets returned. OMG.
 			return null;
 		}
 
@@ -163,12 +161,18 @@ function ($, window, document) {
 		var data = buildQueryData(this.collection);
 		var self = this;
 		var $d = $(document);
-		var hash, caller_option, cache;
+		var hash, caller_option, cache, arr_history;
 		// var _args;
 		// console.log('PageController: query');
 		this.callerOpt = obj || {};
 		if (!this.callerOpt.noHistory && !this.callerOpt.append) {
-			pushHistory(this.isNativeHistory, this.url, data);
+			arr_history = this.forgeHistory(data);
+			if (this.isNativeHistory) {
+				history.pushState(arr_history[0], arr_history[1], arr_history[2]);
+			}
+			else {
+				History.pushState(arr_history[0], arr_history[1], arr_history[2]);
+			}
 		}
 
 		if (!this.isNativeHistory) {
@@ -408,6 +412,18 @@ function ($, window, document) {
 		return this;
 	};
 
+	/**
+	 * create history arguments
+	 * @param {object} data query parameter
+	 * @returns {array} should follow the method footprint of pushSistory interface.
+	 * @see http://www.whatwg.org/specs/web-apps/current-work/multipage/history.html#dom-history-pushstate
+	 */
+	PageController.prototype.forgeHistory = function (data) {
+		// history.pushState(data, title, url)
+		var result = [data, 'Meetup', Meetup.URL.mungeUrl(this.url, data)];
+		return result;
+	};
+
 	// STATIC variables
 	// ===================================
 
@@ -574,32 +590,6 @@ function ($, window, document) {
 		}
 		// make some value tweak
 		return result;
-	};
-
-	/**
-	 * pushState wrapper
-	 * @param {boolean} isNativeHistory
-	 * @param {string} url
-	 * @param {*} data
-	 * @see [dependency] Meetup.URL
-	 * @see [dependency] http://github.com/balupton/history.js
-	 */
-	var pushHistory = function (isNativeHistory, url, data) {
-		var myurl = Meetup.URL.mungeUrl(url, data);
-		if (isNativeHistory) {
-			history.pushState(
-				data,
-				['Find a Meetup: ', data.keywords].join(''),
-				myurl
-			);
-		}
-		else {
-			History.pushState(
-				data,
-				['Find a Meetup: ', data.keywords].join(''),
-				myurl
-			);
-		}
 	};
 
 	/**
